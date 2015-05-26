@@ -1,25 +1,33 @@
 {
   "name": "pg-metadata",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",  
-  "scripts": {
-    "test": "mocha -R spec"
+  "description": "create a metadata object describing a postgresql database",
+  "main": "index.js",
+  "dependencies": {
+    "debug": "^0.8.1",
+    "pg-escape": "0.0.2",
+    "should": "^6.0.3"
   },
-  "dependencies": {},
-    
-   
-    "author": "Yaniv Kessler", 
-  
-  
-  "bugs": {
-    "url": "https://github.com/kessler/pg-metadata/issues"
+  "devDependencies": {
+    "validate-schema": "0.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/kessler/pg-metadata"
   },
-  "homepage": "https://github.com/kessler/pg-metadata",
-    
-  "license": "MIT"
+  "keywords": [
+    "postgreSQL",
+    "pg",
+    "postgre",
+    "redshift"
+  ],
+  "author": "Yaniv Kessler",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kessler/pg-metadata/issues"
+  },
+  "homepage": "https://github.com/kessler/pg-metadata"
 }
