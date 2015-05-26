@@ -1,7 +1,7 @@
 pg-metadata
 ---------
 
-creates a metadata object by querying the metadata tables of postresql
+get the metadata of a postresql or redshift db
 
 ```javascript	
     var connection = /* anything that exposes a .query('sql', params, function(err, results) {}) interface to a postgresql server */
