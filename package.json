@@ -1,6 +1,6 @@
 {
   "name": "pg-metadata",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "create a metadata object describing a postgresql database",
   "main": "index.js",
   "dependencies": {
