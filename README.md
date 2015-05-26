@@ -7,7 +7,8 @@ get the metadata of a postresql or redshift db
     var connection = /* anything that exposes a .query('sql', params, function(err, results) {}) interface to a postgresql server */
     var pgMetadata = require('pg-metadata')
 
-    pgMetadata(connection, /* tableName, schemaName, databaseName */, function(err, metadata) {
+    pgMetadata(connection, /* tableName, schemaName, databaseName, */ 
+        function(err, metadata) {
 
         // prints varchar
         console.log(metadata.mydb.myschema.mytable.columnA.type) 
