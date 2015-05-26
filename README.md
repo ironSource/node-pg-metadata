@@ -8,9 +8,15 @@ get the metadata of a postresql or redshift db
     var pgMetadata = require('pg-metadata')
 
     pgMetadata(connection, /* tableName, schemaName, databaseName */, function(err, metadata) {
-        console.log(metadata.mydb.myschema.mytable.columnA.type) // prints varchar
-        console.log(metadata.mydb.myschema.mytable.columnA.length) // 200
-        console.log(metadata.mydb.myschema.mytable.columnA.required) // prints true, field is not nullable
+
+        // prints varchar
+        console.log(metadata.mydb.myschema.mytable.columnA.type) 
+
+        // prints 200
+        console.log(metadata.mydb.myschema.mytable.columnA.length) 
+
+        // prints true, field is not nullable
+        console.log(metadata.mydb.myschema.mytable.columnA.required) 
     })
 ```
 
