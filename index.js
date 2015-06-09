@@ -16,33 +16,20 @@ var informationSchemaFields = module.exports.informationSchemaFields = [
 	'numeric_precision'
 ]
 
-function pgMetadata(connection, tableName, schemaName, databaseName, callback) {
+function pgMetadata(connection, options, callback) {
 
 	if (!connection)
 		throw new Error('must provide a connection object')
 
-	if (typeof (tableName) === 'function') {
-		callback = tableName
-		tableName = undefined
-		schemaName = undefined
-		databaseName = undefined
-	}
-
-	if (typeof (schemaName) === 'function') {
-		callback = schemaName
-		schemaName = undefined
-		databaseName = undefined
-	}
-
-	if (typeof (databaseName) === 'function') {
-		callback = databaseName
-		databaseName = undefined
+	if (typeof (options) === 'function') {
+		callback = options
+		options = undefined
 	}
 
 	if (!callback)
 		throw new Error('must provide a callback')
 
-	var query = pgEscape(createQuery(tableName, schemaName, databaseName))
+	var query = pgEscape(createQuery(options))
 
 	debug(query)
 
