@@ -5,11 +5,10 @@
   "main": "index.js",
   "dependencies": {
     "debug": "^0.8.1",
-    "pg-escape": "0.0.2",
-    "should": "^6.0.3"
+    "pg-escape": "0.0.2"
   },
   "devDependencies": {
-    "validate-schema": "0.0.1"
+    "should": "^6.0.3"
   },
   "scripts": {
     "test": "mocha"
@@ -19,7 +18,7 @@
     "url": "https://github.com/kessler/pg-metadata"
   },
   "keywords": [
-    "postgreSQL",
+    "postgresql",
     "pg",
     "postgre",
     "redshift"
