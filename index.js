@@ -68,7 +68,7 @@ function createQuery(opts) {
 	}
 
 	if (whereClause.length > 0) {
-		sql += whereClause.join(' AND ')
+		sql += ' WHERE ' + whereClause.join(' AND ')
 	}
 
 	return pgEscape.apply(null, [sql].concat(values))

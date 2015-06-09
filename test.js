@@ -27,19 +27,26 @@ describe('pg-metadata', function () {
 		it('for a specific database', function () {
 			var opts = { database: 'aDatabase' }
 			var result = pgMetadata.createQuery(opts)
-			result.should.eql(result, sqlBase + ' AND table_catalog=' + opts.database)
+			result.should.eql(sqlBase + ' WHERE table_catalog=\'' + opts.database + '\'')
 		})
 
 		it('for a specific table', function () {
 			var opts = { table: 'aTable' }
 			var result = pgMetadata.createQuery(opts)
-			result.should.eql(result, sqlBase + ' AND table_name=' + opts.table)
+			result.should.eql(sqlBase + ' WHERE table_name=\'' + opts.table + '\'')
 		})
 
 		it('for a specific schema', function () {
 			var opts = { schema: 'aSchema' }
 			var result = pgMetadata.createQuery(opts)
-			result.should.eql(result, sqlBase + ' AND table_schema=' + opts.schema)
+			result.should.eql(sqlBase + ' WHERE table_schema=\'' + opts.schema + '\'')
+		})
+
+		it('for a database, schema and table', function () {
+			var opts = { schema: 'aSchema', table: 'aTable', database: 'aDatabase' }
+			var result = pgMetadata.createQuery(opts)
+			result.should.eql(sqlBase + ' WHERE table_name=\'' + opts.table + '\' AND table_schema=\'' + opts.schema + '\' AND table_catalog=\'' + opts.database + '\'')
+
 		})
 	})
 
