@@ -16,7 +16,9 @@ var informationSchemaFields = module.exports.informationSchemaFields = [
 	'numeric_precision',
 	'numeric_scale',
 	'numeric_precision_radix',
-	'datetime_precision'
+	'datetime_precision',
+	'interval_type',
+	'interval_precision'
 ]
 
 var datetimePrecisionTypes = [
@@ -126,6 +128,9 @@ function createMetadataObject(resultSet) {
 			s.precision_radix = row.numeric_precision_radix
 		} else if (datetimePrecisionTypes.indexOf(s.type) >= 0) {
 			s.precision = row.datetime_precision
+		} else if (s.type === 'interval') {
+			s.precision = row.interval_precision
+			s.interval_type = row.interval_type
 		}
 	}
 
