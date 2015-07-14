@@ -13,7 +13,18 @@ var informationSchemaFields = module.exports.informationSchemaFields = [
 	'table_schema',
 	'table_catalog',
 	'is_nullable',
-	'numeric_precision'
+	'numeric_precision',
+	'numeric_scale',
+	'numeric_precision_radix',
+	'datetime_precision'
+]
+
+var datetimePrecisionTypes = [
+	'timestamp',
+	'timestamptz',
+	'date',
+	'time',
+	'timetz'
 ]
 
 function pgMetadata(connection, options, callback) {
@@ -102,10 +113,19 @@ function createMetadataObject(resultSet) {
 			schema[row.table_name] = table = {}
 		}
 
-		table[key] = {
+		var s = table[key] = {
 			type: row.udt_name,
-			length: row.character_maximum_length ?  row.character_maximum_length : row.numeric_precision,
 			required: row.is_nullable ? true : false
+		}
+
+		if (s.type.indexOf('char')>=0 || s.type.indexOf('text')>=0) {
+			s.length = row.character_maximum_length
+		} else if (row.numeric_precision_radix != null) {
+			s.precision = row.numeric_precision
+			s.scale = row.numeric_scale
+			s.precision_radix = row.numeric_precision_radix
+		} else if (datetimePrecisionTypes.indexOf(s.type) >= 0) {
+			s.precision = row.datetime_precision
 		}
 	}
 
