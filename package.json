@@ -8,6 +8,7 @@
     "pg-escape": "0.0.2"
   },
   "devDependencies": {
+    "mocha": "~2.2.5",
     "should": "^6.0.3"
   },
   "scripts": {
