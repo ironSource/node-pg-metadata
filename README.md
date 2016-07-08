@@ -30,5 +30,3 @@ instead of letting pgMetadata run the query, you can run it yourself:
     // run the query and when you get the result set do:
     var metadata = pgMetadata.createMetadataObject(resultSet)    
 ```
-
-See also [pg-schema](https://github.com/kessler/pg-schema)
