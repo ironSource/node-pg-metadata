@@ -14,7 +14,7 @@ describe('pg-metadata', function () {
 			table_name: 'atable',
 			table_schema: 'aschema',
 			table_catalog: 'adb',
-			is_nullable: true,
+			is_nullable: false,
 			numeric_precision: null,
 			numeric_scale: null,
 			numeric_precision_radix: null,
@@ -22,7 +22,7 @@ describe('pg-metadata', function () {
 			interval_type: null,
 			interval_precision: null
 		},
-		{ 
+		{
 			character_maximum_length: 244,
 			column_name: 'b',
 			udt_name: 'varchar',
@@ -71,6 +71,7 @@ describe('pg-metadata', function () {
 			table_name: 'ctable',
 			table_schema: 'cschema',
 			table_catalog: 'cdb',
+			is_nullable: 'NO',
 			numeric_precision: 24,
 			numeric_scale: null,
 			numeric_precision_radix: 2,
@@ -84,6 +85,7 @@ describe('pg-metadata', function () {
 			table_name: 'ctable',
 			table_schema: 'cschema',
 			table_catalog: 'cdb',
+			is_nullable: 'YES',
 			numeric_precision: 12,
 			numeric_scale: 2,
 			numeric_precision_radix: 10,
@@ -182,7 +184,7 @@ describe('pg-metadata', function () {
 	describe('creates a metadata object from a query result set that contains all', function () {
 		it('the databases', function () {
 			var actual = pgMetadata.createMetadataObject(resultSet)
-			
+
 			actual.should.have.property('adb')
 			actual.should.have.property('bdb')
 			actual.should.have.property('cdb')
@@ -192,7 +194,7 @@ describe('pg-metadata', function () {
 
 		it('schemas in a database', function () {
 			var actual = pgMetadata.createMetadataObject(resultSet)
-			
+
 			actual.adb.should.have.property('aschema')
 			actual.bdb.should.have.property('bschema')
 			actual.cdb.should.have.property('cschema')
@@ -202,7 +204,7 @@ describe('pg-metadata', function () {
 
 		it('tables in each schema', function () {
 			var actual = pgMetadata.createMetadataObject(resultSet)
-			
+
 			actual.adb.aschema.should.have.property('atable')
 			actual.adb.aschema.should.have.property('btable')
 
@@ -211,7 +213,7 @@ describe('pg-metadata', function () {
 
 		it('columns in each table', function () {
 			var actual = pgMetadata.createMetadataObject(resultSet)
-			
+
 			actual.adb.aschema.atable.should.have.property('a')
 			actual.adb.aschema.atable.should.have.property('b')
 			actual.bdb.bschema.btable.should.have.property('a')
@@ -219,7 +221,7 @@ describe('pg-metadata', function () {
 
 		it('types of data and length for each columns', function () {
 			var actual = pgMetadata.createMetadataObject(resultSet)
-			
+
 			actual.adb.aschema.atable.a.should.have.property('type', 'varchar')
 			actual.adb.aschema.atable.a.should.have.property('length', 244)
 			actual.adb.aschema.atable.a.should.not.have.property('scale')
@@ -236,7 +238,7 @@ describe('pg-metadata', function () {
 			actual.cdb.should.be.eql({
 				cschema: {
 					ctable: {
-						a: { type: 'float4', required: false, precision: 24, scale: null, precision_radix: 2 },
+						a: { type: 'float4', required: true, precision: 24, scale: null, precision_radix: 2 },
 						b: { type: 'numeric', required: false, precision: 12, scale: 2, precision_radix: 10 }
 					}
 				}
@@ -269,7 +271,7 @@ describe('pg-metadata', function () {
 			.which.have.property('atable')
 			.which.have.property('a')
 			.which.have.property('type', 'varchar')
-			
+
 			done()
 		})
 	})
@@ -285,7 +287,7 @@ MockConnection.prototype.query = function(q, cb) {
 	setImmediate(function () {
 		if (self.error)
 			cb(new Error('lalala'))
-		else 
+		else
 			cb(null, { rows: self.resultSet })
 	})
 }
