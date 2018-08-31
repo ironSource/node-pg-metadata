@@ -5,9 +5,9 @@ module.exports = pgMetadata
 module.exports.createQuery = createQuery
 module.exports.createMetadataObject = createMetadataObject
 var informationSchemaFields = module.exports.informationSchemaFields = [
-	'column_name', 
-	'udt_name', 
-	'data_type', 
+	'column_name',
+	'udt_name',
+	'data_type',
 	'character_maximum_length',
 	'table_name',
 	'table_schema',
@@ -49,11 +49,11 @@ function pgMetadata(connection, options, callback) {
 	connection.query(query, function (err, result) {
 		if (err) {
 			callback(err)
-		} else {			
+		} else {
 			var schema = createMetadataObject(result.rows)
 			debug(schema)
-			callback(null, schema)	
-		} 
+			callback(null, schema)
+		}
 	})
 }
 
@@ -73,7 +73,7 @@ function createQuery(opts) {
 	if (opts.schema) {
 		whereClause.push('table_schema=%L')
 		values.push(opts.schema)
-	} 
+	}
 
 	if (opts.database) {
 		whereClause.push('table_catalog=%L')
@@ -92,7 +92,7 @@ function createMetadataObject(resultSet) {
 
 	for (var i = 0; i < resultSet.length; i++) {
 		var row = resultSet[i]
-		
+
 		var key = row.column_name
 		var table = row.table_name
 		var schema = row.table_schema
@@ -106,18 +106,18 @@ function createMetadataObject(resultSet) {
 		var schema = database[row.table_schema]
 
 		if (!schema) {
-			database[row.table_schema] = schema = {}			
+			database[row.table_schema] = schema = {}
 		}
 
 		var table = schema[row.table_name]
-		
+
 		if (!table) {
 			schema[row.table_name] = table = {}
 		}
 
 		var s = table[key] = {
 			type: row.udt_name,
-			required: row.is_nullable ? true : false
+			required: row.is_nullable === 'NO' || row.is_nullable === false
 		}
 
 		if (s.type.indexOf('char')>=0 || s.type.indexOf('text')>=0) {
